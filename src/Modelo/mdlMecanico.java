@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.UUID;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class mdlMecanico {
@@ -72,6 +73,7 @@ public class mdlMecanico {
             addMecanico.setString(5, getCorreoMecanico());
 
             addMecanico.executeUpdate();
+            
             JOptionPane.showMessageDialog(null, "Mecánico insertado con éxito.");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Error al insertar mecánico: " + ex.getMessage());
@@ -153,6 +155,45 @@ public class mdlMecanico {
             JOptionPane.showMessageDialog(null, "Selecciona un mecánico para eliminar.");
         }
     }
+    
+        public void buscarMecanico(JTable tabla, JTextField miTextField){
+
+            Connection conexion = ClaseConexion.getConexion();
+
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.setColumnIdentifiers(new Object[]{"Código Mecánico", "Nombre", "Edad", "Peso", "Correo"});
+
+            try {
+                String query = "SELECT uuidMecanico, nombreMecanico, edadMecanico, pesoMecanico, correoMecanico FROM tbMecanico WHERE nombreMecanico LIKE ? || '%'";
+                PreparedStatement buscar = conexion.prepareStatement(query);
+                buscar.setString(1, miTextField.getText());
+
+                ResultSet rs = buscar.executeQuery();
+
+                  while (rs.next()) {
+                    modelo.addRow(new Object[]{
+                        rs.getString("uuidMecanico"),
+                        rs.getString("nombreMecanico"),
+                        rs.getInt("edadMecanico"),
+                        rs.getDouble("pesoMecanico"),
+                        rs.getString("correoMecanico")
+                    });
+                }
+
+                 tabla.setModel(modelo);
+                tabla.getColumnModel().getColumn(0).setMinWidth(0);
+                tabla.getColumnModel().getColumn(0).setMaxWidth(0);
+                tabla.getColumnModel().getColumn(0).setWidth(0);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Erro al buscar mecanico" + ex.getMessage());
+                System.out.println(ex);
+            }
+
+
+
+        }
     
     public void cargarDatos(frmMecanico vista){
         
