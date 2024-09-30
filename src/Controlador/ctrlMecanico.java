@@ -37,50 +37,50 @@ public class ctrlMecanico implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         
-        if (e.getSource() == vista.btnAgregar) {
-            try {
-                if (vista.txtNombre.getText().isEmpty() || vista.txtEdad.getText().isEmpty() || 
-                    vista.txtPeso.getText().isEmpty() || vista.txtCorreo.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
-                    return;
-                }
-
-                if (!vista.txtNombre.getText().matches("[a-zA-Z ]+")) {
-                    JOptionPane.showMessageDialog(null, "El nombre no debe contener números.");
-                    return;
-                }
-
+            if (e.getSource() == vista.btnAgregar) {
                 try {
-                    Integer.parseInt(vista.txtEdad.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "La edad debe ser un número entero.");
-                    return;
+                    if (vista.txtNombre.getText().isEmpty() || vista.txtEdad.getText().isEmpty() || 
+                        vista.txtPeso.getText().isEmpty() || vista.txtCorreo.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
+                        return;
+                    }
+
+                    if (!vista.txtNombre.getText().matches("[a-zA-Z ]+")) {
+                        JOptionPane.showMessageDialog(null, "El nombre solo debe contener letras");
+                        return;
+                    }
+
+                    try {
+                        Integer.parseInt(vista.txtEdad.getText());
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "La edad debe ser un número entero");
+                        return;
+                    }
+
+                    try {
+                        Double.parseDouble(vista.txtPeso.getText());
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "El peso debe ser un número decimal");
+                        return;
+                    }
+
+                    if (!vista.txtCorreo.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                        JOptionPane.showMessageDialog(null, "El correo no tiene un formato válido");
+                        return;
+                    }
+
+                    modelo.setNombreMecanico(vista.txtNombre.getText());
+                    modelo.setEdadMecanico(Integer.parseInt(vista.txtEdad.getText()));
+                    modelo.setPesoMecanico(Double.parseDouble(vista.txtPeso.getText()));
+                    modelo.setCorreoMecanico(vista.txtCorreo.getText());
+
+                    modelo.insertarMecanico();
+                    modelo.mostrarMecanicos(vista.jtbMecanico);
+                    modelo.limpiarCampos(vista);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Error al agregar mecánico: " + ex.getMessage());
                 }
-
-                try {
-                    Double.parseDouble(vista.txtPeso.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "El peso debe ser un número decimal.");
-                    return;
-                }
-
-                if (!vista.txtCorreo.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                    JOptionPane.showMessageDialog(null, "El correo no tiene un formato válido.");
-                    return;
-                }
-
-                modelo.setNombreMecanico(vista.txtNombre.getText());
-                modelo.setEdadMecanico(Integer.parseInt(vista.txtEdad.getText()));
-                modelo.setPesoMecanico(Double.parseDouble(vista.txtPeso.getText()));
-                modelo.setCorreoMecanico(vista.txtCorreo.getText());
-
-                modelo.insertarMecanico();
-                modelo.mostrarMecanicos(vista.jtbMecanico);
-                modelo.limpiarCampos(vista);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Error al agregar mecánico: " + ex.getMessage());
             }
-        }
 
         if (e.getSource() == vista.btnEliminar) {
             modelo.eliminarMecanico(vista.jtbMecanico);
@@ -88,35 +88,35 @@ public class ctrlMecanico implements MouseListener{
             modelo.limpiarCampos(vista);
         }
 
-        if (e.getSource() == vista.btnActualizar) {
+       if (e.getSource() == vista.btnActualizar) {
             try {
                 if (vista.txtNombre.getText().isEmpty() || vista.txtEdad.getText().isEmpty() || 
                     vista.txtPeso.getText().isEmpty() || vista.txtCorreo.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios.");
+                    JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios");
                     return;
                 }
 
                 if (!vista.txtNombre.getText().matches("[a-zA-Z ]+")) {
-                    JOptionPane.showMessageDialog(null, "El nombre no debe contener números.");
+                    JOptionPane.showMessageDialog(null, "El nombre solo debe contener letras");
                     return;
                 }
 
                 try {
                     Integer.parseInt(vista.txtEdad.getText());
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "La edad debe ser un número entero.");
+                    JOptionPane.showMessageDialog(null, "La edad debe ser un número entero");
                     return;
                 }
 
                 try {
                     Double.parseDouble(vista.txtPeso.getText());
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "El peso debe ser un número decimal.");
+                    JOptionPane.showMessageDialog(null, "El peso debe ser un número decimal");
                     return;
                 }
 
                 if (!vista.txtCorreo.getText().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
-                    JOptionPane.showMessageDialog(null, "El correo no tiene un formato válido.");
+                    JOptionPane.showMessageDialog(null, "El correo no tiene un formato válido");
                     return;
                 }
 
